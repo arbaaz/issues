@@ -1,7 +1,8 @@
 defmodule Issues.CLI do
+  import Issues.TableFormater, only: [print_table_for_columns: 2]
   @default_count 4
 
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_args
     |> process
@@ -24,8 +25,13 @@ defmodule Issues.CLI do
   def process({user, project, count}) do
     Issues.GithubIssues.fetch(user, project)
     |> decode_response()
+    # |> (fn x ->
+    #       IO.puts(x)
+    #       x
+    #     end).()
     |> sort_into_descending_order()
     |> last(count)
+    |> print_table_for_columns(["number", "created_at", "title"])
   end
 
   def last(list, count) do
@@ -41,7 +47,7 @@ defmodule Issues.CLI do
     end)
   end
 
-  def decode_response({:ok, _}), do: :ok
+  def decode_response({:ok, body}), do: body
 
   def decode_response({:error, error}) do
     IO.puts("Error fetching from Github: #{error["message"]}")

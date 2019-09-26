@@ -1,7 +1,9 @@
 {application,issues,
-             [{applications,[kernel,stdlib,elixir,logger,poison,httpoison]},
+             [{applications,[kernel,stdlib,elixir,logger,poison,earmark,
+                             httpoison]},
               {description,"issues"},
               {modules,['Elixir.Issues','Elixir.Issues.CLI',
-                        'Elixir.Issues.GithubIssues']},
+                        'Elixir.Issues.GithubIssues',
+                        'Elixir.Issues.TableFormater']},
               {registered,[]},
               {vsn,"0.1.0"}]}.
